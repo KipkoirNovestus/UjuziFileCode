@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>County and Sub-County Selector</title>
+</head>
+<body>
+  <div class="input-field">
+    <label for="county">County:</label>
+    <select id="county" aria-label="County select example">
+      <option value="">Select County:</option>
+      <option value="county1">Nairobi</option>
+      <option value="county2">Nandi</option>
+      <option value="county3">Kericho</option>
+    </select>
+  </div>
+
+  <div class="input-field ">
+    <label for="subCounty">Sub-County:</label>
+    <select id="subCounty" aria-label="Sub-County select example" disabled>
+      <option value="">Select Sub-County:</option>
+    </select>
+  </div>
+
+  <script>
+    const countySubCountyMap = {
+      county1: ['Kiambu', 'Juja'],
+      county2: ['Nandi Hills', 'Tinderet'],
+      county3: ['Kanoi', 'Ainamoi']
+    };
+
+    const countySelect = document.getElementById('county');
+    const subCountySelect = document.getElementById('subCounty');
+
+    countySelect.addEventListener('change', function() {
+      const selectedCounty = this.value;
+
+      // Clear previous options
+      subCountySelect.innerHTML = '<option value="">Select Sub-County:</option>';
+
+      if (selectedCounty && countySubCountyMap[selectedCounty]) {
+        // Enable and populate sub-county select
+        subCountySelect.disabled = false;
+        countySubCountyMap[selectedCounty].forEach(subCounty => {
+          const option = document.createElement('option');
+          option.value = subCounty;
+          option.textContent = subCounty;
+          subCountySelect.appendChild(option);
+        });
+      } else {
+        // Disable sub-county select if no county is selected
+        subCountySelect.disabled = true;
+      }
+    });
+  </script>
+</body>
+</html>
